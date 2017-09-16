@@ -1,0 +1,21 @@
+import os ;
+
+
+local root = $(SPACE)/rocket/libs/net ;
+
+
+
+
+
+pylon_lib pylon_net
+	: remote.cpp  
+	: ../error//pylon_error  $(SUN)//boost_log  $(SUN)//curl 
+	;
+
+pylon_ut  net_ut
+	: test_net.cpp   pylon_net  $(SUN)//boost_log $(SUN)//curl  
+	: <linkflags>ws2_32.lib  <linkflags>wldap32.lib <define>WIN32
+	;
+
+
+

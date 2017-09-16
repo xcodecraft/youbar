@@ -1,0 +1,42 @@
+import os ;
+#import python ;
+#using python ;
+
+local root = $(SPACE)/rocket/libs/error ;
+
+
+local OS = [ os.environ OS ] ;
+local WIN = "Windows_NT"  ;
+constant CUR_OS :  "" ;
+
+
+if $(OS) = $(WIN)
+{
+    lib_src =            
+        error.cpp
+        ;
+
+    pylon_lib pylon_error
+        : $(lib_src)   
+        ;
+
+    pylon_ut error_ut 
+		: test_error.cpp  pylon_error  $(SUN)//boost_log  
+        ;
+
+}
+else
+{
+
+    lib_src =            
+        error.cpp
+        ;
+
+    pylon_lib pylon_error
+        : $(lib_src)   
+        ;
+
+    pylon_ut error_ut 
+        : test_error.cpp  pylon_error   $(SUN)//boost_system   $(SUN)//boost_log  $(SUN)//boost_filesystem  $(SUN)//boost_thread 
+        ;
+}

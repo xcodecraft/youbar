@@ -1,0 +1,20 @@
+__events:
+    muti_proc_e : !!python/object:event_proc.multi_proc
+
+        subs:
+            - !!python/object:event_proc.uniq
+                buff_size: 100
+                wait_sec: 10
+            - !!python/object:event_proc.pack
+                pack_size:   10
+                wait_sec: 10
+                
+
+    gamezone_history: !!python/object:event_proc.pack
+        pack_size:   10
+        wait_sec: 10
+
+    testrep: !!python/object:event_proc.uniq
+        buff_size: 100
+        wait_sec: 10
+        

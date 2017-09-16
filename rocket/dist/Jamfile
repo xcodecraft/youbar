@@ -1,0 +1,23 @@
+import  os ;
+
+
+path-constant SPACE :  ../ ;
+path-constant CLIBS :  $(SPACE)/libs  ;
+
+
+
+
+
+
+rule pylon_lib ( name  )
+{
+
+
+   lib $(name) : : <file>debug/lib$(name).so  <variant>debug ;
+   lib $(name) : : <file>release/lib$(name).so  <variant>release ;
+}
+
+
+pylon_lib pylon_syslog ;
+pylon_lib pylon_error ;
+pylon_lib pylon_http ;

@@ -1,0 +1,24 @@
+import os ;
+alias boost_system : $(SUN)//boost_system ;
+alias boost_unit : $(SUN)//boost_unit_test_framework ;
+
+local root = $(SPACE)/rocket/libs/text ;
+
+
+
+
+
+exe_source =            
+     main.cpp  
+    ;
+
+
+test_src =            
+     test/test_json.cpp  
+     test/test_spirit.cpp
+    ;
+
+
+exe text_ut : $(root)/$(test_src)  boost_system   boost_unit    ..//pylon_text ;
+
+stage dist2 :   text_ut  : <location>$(root)/bin/ ;

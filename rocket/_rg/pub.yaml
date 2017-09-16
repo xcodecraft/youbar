@@ -1,0 +1,249 @@
+refs:
+    - !P.pkg &econf_pkg_ref
+        name: "hydra_econf"
+        root: "./data/wan/"
+        exclude:
+            - "test"
+            - "reducer"
+            - "data"
+            - ".git"
+    - !P.deploy &econf_deploy_ref
+        sudo: True
+        root: "/home/q/system"
+
+    - !P.shell &econf_setup
+        sudo: True
+        cmd: "/home/q/system/hydra_econf/setup.sh"
+    - !P.host &work_host
+            include:
+                - 172.28.0.24
+    - !P.host &local_host
+            include:
+                - 127.0.0.1
+    - !P.host  &sandbox_host
+            include:
+                - "220.181.127.214"
+    - !P.host &ccp_host
+        include:
+            - "w-w27.wg.ccp.qihoo.net"
+    - !P.host &zwt_host
+        include:
+            - "w-w19.wg.zwt.qihoo.net"
+    - !P.host &imgse_host
+        include:
+            - "w-w021.imgse.zzbc.qihoo.net"
+    - &svc_conf
+        sys:  "center,monitor"
+        vars: "PRJ_ROOT=/home/q/system/hydra_svc"
+pubs:
+    - &econf_pub
+        pkg     : *econf_pkg_ref
+        deploy  : *econf_deploy_ref
+        setup   : *econf_setup
+    - &econf_imgse_pub
+        pkg : !P.pkg 
+            name: "hydra_econf"
+            root: "./data/pic/"
+            exclude:
+                - "test"
+                - "reducer"
+                - "data"
+                - ".git"
+        deploy  : *econf_deploy_ref
+        setup   : *econf_setup
+
+    - &log_pub
+        pkg: !P.pkg 
+            name: "hydra"
+            root: ""
+            exclude:
+                - "data"
+                - "test"
+                - ".git"
+                - "src"
+                - "reducer"
+        deploy: !P.deploy 
+            sudo: True
+            root: "/home/q/system"
+    - &svc_pub
+        pkg: !P.pkg &svc_pkg_ref
+            name: "hydra_svc"
+            root: "./"
+            exclude:
+                - "test"
+                - "reducer"
+                - "data"
+                - ".git"
+        deploy: !P.deploy &svc_deploy_ref
+            sudo: True
+            root: "/home/q/system"
+        patch: !P.patch           
+            user : "search"
+
+__publishs:
+    work_sdk: !P.publish
+        pkg: !P.pkg &pkg_ref
+            name: "hydra_sdk"
+            root: "./sdk"
+            exclude:
+                - ".pyc"
+                - ".git"
+        deploy: !P.deploy &deploy_ref
+            user: "search"
+            root: "/home/q/php"
+        host: !P.host
+            include:
+            - "@/home/q/tools/game_team/svr/dev.svr"
+        setup: !P.shell
+            user: "search"
+            cmd    : "/home/q/php/hydra_sdk/setup.sh work"
+
+    ccp_sdk: !P.publish
+        pkg     : *pkg_ref
+        deploy  : *deploy_ref
+        host    : !P.host
+            include:
+            - "@/home/q/tools/game_team/svr/ccp.svr"
+        setup: !P.shell
+            user: "search"
+            cmd    : "/home/q/php/hydra_sdk/setup.sh ccp"
+
+    zwt_sdk: !P.publish
+        pkg     : *pkg_ref
+        deploy  : *deploy_ref
+        host    : !P.host
+            include:
+            - "@/home/q/tools/game_team/svr/zwt.svr"
+        setup: !P.shell
+            user: "search"
+            cmd    : "/home/q/php/hydra_sdk/setup.sh zwt"
+
+    sandbox_sdk: !P.publish
+        pkg     : *pkg_ref
+        deploy  : *deploy_ref
+        host    : !P.host
+            include:
+                - "220.181.127.214"
+                - "220.181.127.215"
+        setup: !P.shell
+            user: "search"
+            cmd    : "/home/q/php/hydra_sdk/setup.sh sandbox"
+
+    imgse_sdk: !P.publish
+        pkg     : *pkg_ref
+        deploy  : *deploy_ref
+        host    : !P.host
+            include:
+                - "@/home/q/tools/game_team/svr/zzbc.svr"
+        setup: !P.shell
+            user: "search"
+            cmd    : "/home/q/php/hydra_sdk/setup.sh imgse"
+
+    local_log: !P.publish
+        << : *log_pub
+        host: !P.host
+            include:
+                - 127.0.0.1
+        setup: !P.rigger  &log_setup
+            env:  "work"
+            sys:  "event_log"
+
+    local_svc: !P.publish
+        <<      : *svc_pub
+        host    : !P.host
+            include:
+                - 127.0.0.1
+        setup   : !P.rigger
+            << : *svc_conf
+            env:  "work,debug"
+
+    local_log: !P.publish
+        <<      : *log_pub
+        host    : *local_host
+        setup: !P.rigger  
+            env:  "work"
+            sys:  "event_log"
+
+    sandbox_log: !P.publish
+        <<      : *log_pub
+        host    : *sandbox_host
+        setup: !P.rigger  
+            env:  "sandbox"
+            sys:  "event_log"
+
+    ccp_log: !P.publish
+        <<      : *log_pub
+        host    : *ccp_host
+        setup: !P.rigger  
+            env:  "ccp"
+            sys:  "event_log"
+    zwt_log: !P.publish
+        <<      : *log_pub
+        host    : *zwt_host
+        setup: !P.rigger  
+            env:  "zwt"
+            sys:  "event_log"
+    work_log: !P.publish
+        <<      : *log_pub
+        host    : *work_host
+        setup: !P.rigger  
+            env:  "work"
+            sys:  "event_log"
+    imgse_log: !P.publish
+        <<      : *log_pub
+        host    : *imgse_host
+        setup: !P.rigger  
+            env:  "imgse"
+            sys:  "event_log"
+
+    work_econf: !P.publish
+        <<      : *econf_pub
+        host    : *work_host
+
+    sandbox_econf: !P.publish
+        <<      : *econf_pub
+        host    : *sandbox_host
+
+    ccp_econf: !P.publish
+        <<      : *econf_pub
+        host    : *ccp_host
+    zwt_econf: !P.publish
+        <<      : *econf_pub
+        host    : *zwt_host
+    imgse_econf: !P.publish
+        <<      : *econf_imgse_pub
+        host    : *imgse_host
+
+    work_svc: !P.publish
+        <<      : *svc_pub 
+        host    : *work_host
+        setup   : !P.rigger
+            << : *svc_conf
+            env:  "work"
+
+    sandbox_svc: !P.publish
+        <<      : *svc_pub 
+        host    : *sandbox_host
+        setup   : !P.rigger
+            << : *svc_conf
+            env:  "sandbox"
+    ccp_svc: !P.publish
+        <<      : *svc_pub 
+        host    : *ccp_host
+        setup   : !P.rigger
+            << : *svc_conf
+            env:  "ccp"
+    zwt_svc: !P.publish
+        <<      : *svc_pub 
+        host    : *zwt_host
+        setup   : !P.rigger
+            << : *svc_conf
+            env:  "zwt"
+
+    imgse_svc: !P.publish
+        <<      : *svc_pub 
+        host    : *imgse_host
+        setup   : !P.rigger
+            << : *svc_conf
+            env:  "imgse"
+

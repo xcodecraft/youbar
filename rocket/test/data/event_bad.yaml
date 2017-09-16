@@ -1,0 +1,9 @@
+__events:
+    gamezone_history: !!python/object:event_proc.pack
+        pack_size:   10
+        wait_sec: 10
+
+    testrep: !!python/object:event_proc.uniq1
+        buff_size: 100
+        wait_sec: 10
+        

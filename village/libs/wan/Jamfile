@@ -1,0 +1,15 @@
+import os ;
+
+local root = $(SPACE)/rocket/libs/text  ;
+
+pylon_lib  wan_gdict
+	:  gdict.cpp
+	: $(SUN)//boost_log  $(ROCKET)/libs/text//pylon_text  $(ROCKET)/libs/net//pylon_net 
+	;
+
+
+
+pylon_ut gdict_ut 
+	:  gdict_test.cpp   wan_gdict 
+	:
+	;

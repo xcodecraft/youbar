@@ -1,0 +1,28 @@
+import os ;
+import python ;
+
+local root = $(SPACE)/rocket/libs/text  ;
+
+pylon_lib pylon_text
+	#:  json.cpp node.cpp text.cpp   conf.cpp conf_parser.cpp conf_cmd.cpp  conf_impl.cpp conf_grammar.cpp
+	:  json.cpp node.cpp text.cpp   rigger_base.cpp  rigger_conf.cpp rigger_run.cpp rigger_parser.cpp   conf_grammar.cpp
+	: $(SUN)//boost_log
+	;
+
+
+boostlibs =  $(SUN)//boost_system   $(SUN)//boost_log  $(SUN)//boost_filesystem  $(SUN)//boost_thread  ;
+
+pylon_ut text_ut 
+	:  pylon_text     test/test_rg_base.cpp   ../error//pylon_error  ../log//pylon_log   $(boostlibs) 
+	:
+	;
+
+pylon_ut text_gm_ut 
+	:  pylon_text       test/test_grammar.cpp ../error//pylon_error  ../log//pylon_log   $(boostlibs) 
+	:
+	;
+
+python_module py_pylon_text 
+    : rigger_py.cpp  pylon_text    ../error//pylon_error  ../log//pylon_log  $(boostlibs)
+    : 
+    ;   

@@ -1,0 +1,117 @@
+import os ;
+import toolset  ;
+
+
+local OS = [ os.environ OS ] ;
+local WIN = "Windows_NT"  ;
+
+if $(OS) = $(WIN)
+{
+    constant PRJ_OS : "WIN" ;
+	using msvc ;
+}
+else 
+{
+    constant PRJ_OS : "UNIX" ;
+	using gcc ;
+}
+
+constant WIN_DEF   :   <define>WIN32   ;
+
+rule pylon_lib ( name :   source *   : libs *  )
+{
+    local OS        = [ os.environ OS ] ;
+    local WIN       = "Windows_NT"  ;
+    local OS_DEPEND ;
+    local OS_KEY    = OS_UNIX ;
+    if $(OS) = $(WIN) 
+    {
+        OS_DEPEND  = <define>OS_WIN $(WIN_DEF) ;
+		lib  $(name) 
+			:  $(source)  $(libs) 
+			:  $(OS_DEPEND)
+			: 
+			;
+	}
+	else
+	{
+        OS_DEPEND  = <define>OS_UNIX ;
+		lib  $(name)
+			: $(source)  
+			: $(OS_DEPEND)  
+			;
+	}
+	stage $(name)_dist_1 : $(name)  :    <location>$(LIB_DIST)/debug <variant>debug  ;
+    stage $(name)_dist_2 : $(name)  :    <location>$(LIB_DIST)/release <variant>release ; 
+}
+
+rule pylon_ut ( name :  source *  :  requires * )
+{
+
+    local OS = [ os.environ OS ] ;
+    local WIN = "Windows_NT"  ;
+    local OS_DEPEND ;
+    if $(OS) = $(WIN)
+    {
+        OS_DEPEND  = <define>OS_WIN $(WIN_DEF) ;
+    }
+    else
+    {
+        OS_DEPEND  = <define>OS_UNIX ;
+    }
+
+    exe $(name) 
+        : $(source)    
+        : $(OS_DEPEND) $(requires)
+        :
+        ;
+	stage $(name)_dist : $(name)  :  <location>$(DIST) ;
+}
+
+rule pylon_ut2 ( name :  source *  :  requires * )
+{
+
+    local OS = [ os.environ OS ] ;
+    local WIN = "Windows_NT"  ;
+    local OS_DEPEND ;
+    if $(OS) = $(WIN)
+    {
+        OS_DEPEND  = <define>OS_WIN $(WIN_DEF) ;
+    }
+    else
+    {
+        OS_DEPEND  = <define>OS_UNIX ;
+    }
+
+    exe $(name) 
+        : $(source)    $(SUN)//boost_ut 
+        : $(OS_DEPEND) <define>BOOST_TEST_DYN_LINK  $(requires)
+        :
+        ;
+	stage $(name)_dist : $(name)  :  <location>$(DIST) ;
+}
+
+rule python_module ( name : source * : requires * )
+{
+
+    local OS = [ os.environ OS ] ;
+    local WIN = "Windows_NT"  ;
+    local OS_DEPEND ;
+    if $(OS) = $(WIN)
+	{
+		python-extension   $(name)
+        : $(source)  $(SUN)//python  $(SUN)//boost_python 
+        : <include>c:/Python27/include 
+        ;   
+	}
+	else
+	{
+		python-extension   $(name)
+        : $(source) $(SUN)//boost_python 
+        : <include>/usr/local/include/python2.7
+        ;   
+	}
+	stage $(name)_dist : $(name)  :  <location>$(DIST) ;
+}
+
+

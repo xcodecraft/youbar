@@ -1,0 +1,71 @@
+modules: 
+    - !R.module &base_svc
+        name: "base_svc"
+        res:
+            - !R.mysql
+                name: "${DB_NAME}"
+                user: "${DB_USER}"
+                password: "${DB_PWD}"
+                sql : "${SRC_ROOT}/init/create_db.sql"
+            - !R.nginx
+                sudo : True 
+
+    - !R.module &pylon_mvc
+        name: "pylon_mvc"
+        res:
+            - !R.vars
+                defs:
+                    PHP_INI: "${PRJ_ROOT}/conf/used/${PRJ_NAME}_${APP_SYS}_php.ini" 
+                    RUN_PATH: "${PRJ_ROOT}/run/${APP_SYS}"
+            - !R.nginx_conf_tpl  
+                tpl: "${PRJ_ROOT}/conf/options/tpl_${APP_SYS}_ngx.conf" 
+                dst: "${PRJ_ROOT}/conf/used/${USER}_${PRJ_NAME}_${APP_SYS}_ngx.conf" 
+                sudo: True
+            - !R.fpm_svc
+                fpm_conf: "${ENV}"
+            - !R.file_tpl
+                tpl:  "${PRJ_ROOT}/conf/options/tpl_${APP_SYS}_config.php"
+                dst:  "${PRJ_ROOT}/conf/used/${APP_SYS}_config.php"
+            - !R.file_tpl
+                tpl:  "${PRJ_ROOT}/conf/options/tpl_${APP_SYS}_php.ini"
+                dst:  "${PHP_INI}"
+            - !R.autoload 
+                src:  "${PRJ_ROOT}/src/logic:${PRJ_ROOT}/src/apps/${APP_SYS}:${MODULES}"
+            - !R.action2
+                src: "${PRJ_ROOT}/src/apps/${APP_SYS}"
+
+
+    - !R.module &pylon_php        
+        name: "pylon_php"
+        res:
+            - !R.vars
+                defs:
+                    PHP_INI: "${PRJ_ROOT}/conf/used/${PRJ_NAME}_${APP_SYS}_php.ini" 
+                    RUN_PATH: "${PRJ_ROOT}/run/${APP_SYS}"
+            - !R.autoload 
+                src:  "${PRJ_ROOT}/src/:${MODULES}"
+            - !R.file_tpl
+                tpl:  "${PRJ_ROOT}/conf/options/tpl_${APP_SYS}_config.php"
+                dst:  "${PRJ_ROOT}/conf/used/${APP_SYS}_config.php"
+            - !R.file_tpl
+                tpl:  "${PRJ_ROOT}/conf/options/tpl_${APP_SYS}_php.ini"
+                dst:  "${PHP_INI}"
+
+
+    - !R.module &syslog
+        name: "syslog"
+        res:
+            - !R.file_tpl
+                tpl:  "${PRJ_ROOT}/conf/options/tpl_syslog-ng.conf"
+                dst:  "${PRJ_ROOT}/conf/used/syslog.conf"
+            - !R.syslog
+                conf: "/etc/syslog-ng/syslog-ng.conf"
+                append: "${PRJ_ROOT}/conf/used/syslog.conf"
+                sudo: True 
+            - !R.path 
+                dst :  "/var/log/${PRJ_NAME}"
+                sudo : True
+#             - !R.logrotate
+#                 tpl:  "${PRJ_ROOT}/conf/options/tpl_logrotate.conf"
+#                 dst:  "${PRJ_ROOT}/conf/used/${PRJ_NAME}_logrotate.conf"
+#                 sudo: True 

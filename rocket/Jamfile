@@ -1,0 +1,47 @@
+import modules ;
+import os ;
+path-constant  SPACE :  ../   ;
+path-constant  SUN :  ../sun   ;
+path-constant  DIST  :  $(SPACE)/rocket/bin ;
+path-constant  LIB_DIST  :  $(SPACE)/rocket/dist ;
+
+local OS = [ os.environ OS ] ;
+local WIN = "Windows_NT"  ;
+constant CUR_OS :  "" ;
+
+
+if $(OS) = $(WIN)
+{
+    CUR_OS = "WIN" ;
+}
+else 
+{
+    CUR_OS = "UNIX" ;
+}
+
+project 
+        : requirements <include>$(SPACE)/sun/include&&$(SPACE)/rocket/include   
+        #: requirements <link>shared <threading>multi <runtime-link>shared  <cflags>-fPIC
+        : requirements <link>shared <threading>multi <runtime-link>shared 
+        : build-dir  $(SPACE)/rocket/build
+        ;
+        
+
+build-project libs/error ;
+build-project libs/log ;
+#build-project libs/text ;
+build-project libs/http ;
+#build-project libs/task ;
+#build-project libs/net ;
+
+echo $(CUR_OS) ;
+constant PRJ_OS :  "" ;
+
+if $(OS) = $(WIN)
+{
+    PRJ_OS = "WIN" ;
+}
+else 
+{
+    PRJ_OS = "UNIX" ;
+}

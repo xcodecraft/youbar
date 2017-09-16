@@ -1,0 +1,167 @@
+(call_stop)[env(dev).vars]
+------------------------------------------------------
+LOG_LEVEL = 1
+SDK_PATH = /home/zuowenjian/devspace/hydra/sdk
+PRJ_ROOT = /home/zuowenjian/devspace/hydra/
+REDUCER_EXTRAS = -l 1
+SDK_CONF = dev
+PHP_ERROR = 
+ENV = dev
+DEBUG = 0
+GM_SERVERS = 127.0.0.1:4730
+SYSLOG_TPL = tpl_dev_syslog-ng.conf
+
+(call_start)[env(dev).vars]
+------------------------------------------------------
+LOG_LEVEL = 1
+SDK_PATH = /home/zuowenjian/devspace/hydra/sdk
+PRJ_ROOT = /home/zuowenjian/devspace/hydra/
+REDUCER_EXTRAS = -l 1
+SDK_CONF = dev
+PHP_ERROR = 
+ENV = dev
+DEBUG = 0
+GM_SERVERS = 127.0.0.1:4730
+SYSLOG_TPL = tpl_dev_syslog-ng.conf
+
+(call_stop)[env(debug).vars]
+------------------------------------------------------
+DEBUG = 1
+REDUCER_EXTRAS = -l 0
+LOG_LEVEL = 0
+
+(call_start)[env(debug).vars]
+------------------------------------------------------
+DEBUG = 1
+REDUCER_EXTRAS = -l 0
+LOG_LEVEL = 0
+
+(call_stop)[prj.vars]
+------------------------------------------------------
+PRJ_KEY = hydra
+MODULES = /home/q/php/pylon-1.8:/home/q/php/svc_utls
+BDB_FILE = /data/hydra/root_dispatch.bdb
+PRJ_NAME = hydra
+PYLON = /home/q/php/pylon-1.8
+
+(call_stop)[prj.vars]
+------------------------------------------------------
+LOG_ROOT = /var/log/hydra/
+
+(call_start)[prj.vars]
+------------------------------------------------------
+PRJ_KEY = hydra
+MODULES = /home/q/php/pylon-1.8:/home/q/php/svc_utls
+BDB_FILE = /data/hydra/root_dispatch.bdb
+PRJ_NAME = hydra
+PYLON = /home/q/php/pylon-1.8
+
+(call_start)[prj.vars]
+------------------------------------------------------
+LOG_ROOT = /var/log/hydra/
+
+(call_start)[prj.vars]
+------------------------------------------------------
+LOG_ROOT = /var/log/hydra/
+
+(call_stop)[system(gearmand).vars]
+------------------------------------------------------
+APP_NAME = gearmand
+RUN_PATH = /home/zuowenjian/devspace/hydra//run/gearmand
+
+(call_stop)[system(gearmand).vars]
+------------------------------------------------------
+APP_SYS = gearmand
+
+Are you share stop Gearmand ? (y/N)
+(call_start)[system(gearmand).vars]
+------------------------------------------------------
+APP_NAME = gearmand
+RUN_PATH = /home/zuowenjian/devspace/hydra//run/gearmand
+
+(call_start)[system(gearmand).vars]
+------------------------------------------------------
+APP_NAME = gearmand
+RUN_PATH = /home/zuowenjian/devspace/hydra//run/gearmand
+
+(call_start)[system(gearmand).vars]
+------------------------------------------------------
+APP_SYS = gearmand
+
+(call_start)[system(gearmand).gearmand]
+------------------------------------------------------
+if ! test -e /var/run/gearmand_hydra_4730.pid ; then  /usr/local/sbin/gearmand  -d -u root -p4730 -P /var/run/gearmand_hydra_4730.pid -l /var/log/hydra/gearmand_4730.log   ; fi
+system code: 0
+
+sudo rm -rf /var/run/rgapp-root-hydra.lock
+system code: 0
+(call_stop)[system(center).vars]
+------------------------------------------------------
+APP_NAME = center
+RUN_PATH = /home/zuowenjian/devspace/hydra//run/center
+
+(call_stop)[system(center).vars]
+------------------------------------------------------
+APP_SYS = center
+PHP_INI = /home/zuowenjian/devspace/hydra//conf/used/php.ini
+PRJ_INCLUDE = /home/zuowenjian/devspace/hydra//conf:/home/zuowenjian/devspace/hydra//src/apps/console/:/home/zuowenjian/devspace/hydra//src/
+RUN_PATH = /home/zuowenjian/devspace/hydra//run/center
+
+(call_start)[system(center).vars]
+------------------------------------------------------
+APP_NAME = center
+RUN_PATH = /home/zuowenjian/devspace/hydra//run/center
+
+(call_start)[system(center).vars]
+------------------------------------------------------
+APP_NAME = center
+RUN_PATH = /home/zuowenjian/devspace/hydra//run/center
+
+(call_start)[system(center).vars]
+------------------------------------------------------
+APP_SYS = center
+PHP_INI = /home/zuowenjian/devspace/hydra//conf/used/php.ini
+PRJ_INCLUDE = /home/zuowenjian/devspace/hydra//conf:/home/zuowenjian/devspace/hydra//src/apps/console/:/home/zuowenjian/devspace/hydra//src/
+RUN_PATH = /home/zuowenjian/devspace/hydra//run/center
+
+sudo rm -rf /var/run/rgapp-root-hydra.lock
+system code: 0
+(call_stop)[system(test).vars]
+------------------------------------------------------
+APP_NAME = test
+RUN_PATH = /home/zuowenjian/devspace/hydra//run/test
+
+(call_stop)[system(test).vars]
+------------------------------------------------------
+APP_SYS = test
+PRJ_INCLUDE = /home/zuowenjian/devspace/hydra//conf:/home/zuowenjian/devspace/hydra//src/apps/console/:/home/zuowenjian/devspace/hydra//src/
+MODULES = /home/zuowenjian/devspace/hydra//test:/home/q/php/pylon-1.8:/home/q/php/svc_utls:/usr/local/php/lib/php
+
+(call_stop)[system(test).using.module(pylon_php).vars]
+------------------------------------------------------
+PHP_INI = /home/zuowenjian/devspace/hydra//conf/used/hydra_test_php.ini
+RUN_PATH = /home/zuowenjian/devspace/hydra//run/test
+
+(call_start)[system(test).vars]
+------------------------------------------------------
+APP_NAME = test
+RUN_PATH = /home/zuowenjian/devspace/hydra//run/test
+
+(call_start)[system(test).vars]
+------------------------------------------------------
+APP_NAME = test
+RUN_PATH = /home/zuowenjian/devspace/hydra//run/test
+
+(call_start)[system(test).vars]
+------------------------------------------------------
+APP_SYS = test
+PRJ_INCLUDE = /home/zuowenjian/devspace/hydra//conf:/home/zuowenjian/devspace/hydra//src/apps/console/:/home/zuowenjian/devspace/hydra//src/
+MODULES = /home/zuowenjian/devspace/hydra//test:/home/zuowenjian/devspace/hydra//test:/home/q/php/pylon-1.8:/home/q/php/svc_utls:/usr/local/php/lib/php:/usr/local/php/lib/php
+
+(call_start)[system(test).using.module(pylon_php).vars]
+------------------------------------------------------
+PHP_INI = /home/zuowenjian/devspace/hydra//conf/used/hydra_test_php.ini
+RUN_PATH = /home/zuowenjian/devspace/hydra//run/test
+
+sudo rm -rf /var/run/rgapp-root-hydra.lock
+system code: 0

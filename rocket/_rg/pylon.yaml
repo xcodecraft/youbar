@@ -1,0 +1,39 @@
+
+__env:
+    dev: !R.vars
+            PRJ_ROOT: "${HOME}/devspace/rocket"
+    doc: !R.vars
+            NOTHING: "NOTHING"
+#             PRJ_ROOT: "/home/q/php/rocket_doc"
+            PRJ_ROOT: "${HOME}/devspace/rocket"
+            DOMAIN:  "rocket.doc.1360.com"
+
+
+__prj: !R.prj
+       res: 
+        - !R.vars
+            PRJ_NAME: "rocket"
+            PRJ_KEY: "rocket"
+            
+__sys:
+    test:  !R.system
+            res:
+            - !R.vars
+                RUN_PATH: "${PRJ_ROOT}/run/test"
+
+            - !R.path
+                dst: "${PRJ_ROOT}/test/rocket/config/used/"
+    doc:  !R.system
+            res:
+                - !R.vars
+                    NOTHING: "NOTHING"
+                - !R.path
+                    dst: "${PRJ_ROOT}/conf/used"
+                - !R.nginx
+                    sudo: True
+                - !R.nginx_conf_tpl
+                    tpl:  "${PRJ_ROOT}/conf/options/doc_ngx_tpl.conf"
+                    dst:  "${PRJ_ROOT}/conf/used/${PRJ_NAME}_${USER}_doc_ngx.conf"
+                    sudo: True
+                - !R.shell
+                    script: "${PRJ_ROOT}/_prj/doc.sh"

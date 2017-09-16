@@ -1,0 +1,111 @@
+import os ;
+import toolset  ;
+
+
+local OS = [ os.environ OS ] ;
+local WIN = "Windows_NT"  ;
+
+if $(OS) = $(WIN)
+{
+	using msvc ;
+}
+else 
+{
+	using gcc ;
+}
+constant WIN_DEF   :   <define>WIN32   ;
+rule pylon_lib ( name :   source *   : libs *  )
+{
+    local OS = [ os.environ OS ] ;
+    local WIN = "Windows_NT"  ;
+    local OS_KEY = OS_UNIX ;
+    DYN_EXTRA_FILE =  dllmain.cpp     ;
+    DYN_SETTING = <define>PYLON_EXPORTS<define>BOOST_ALL_DYN_LINK  ;
+    if $(OS) = $(WIN) 
+    {
+        OS_KEY = OS_WIN ;
+		lib  $(name) 
+			:  $(source)  $(libs) 
+			:  $(WIN_DEF)
+			: 
+			;
+	}
+	else
+	{
+		lib  $(name) 
+
+			: $(source)  
+			: <define>OS_UNIX 
+			;
+	}
+	stage $(name)_dist : $(name)  :  <location>$(DIST) ;
+}
+
+rule pylon_ut ( name :  source *  :  requires * )
+{
+
+    local OS = [ os.environ OS ] ;
+    local WIN = "Windows_NT"  ;
+    local OS_KEY = OS_UNIX ;
+    if $(OS) = $(WIN)
+    {
+        OS_KEY = OS_WIN ;
+    }
+exe $(name) 
+	: $(source)    
+        : <define>$(OS_KEY) $(WIN_DEF) $(requires)
+		:
+        ;
+	stage $(name)_dist : $(name)  :  <location>$(DIST) ;
+}
+
+
+
+rule winexe_debug ( properties * )
+{
+    EXE_LINK_D =  /LIBPATH:"$(SUN)/libs"  /DEBUG  /SUBSYSTEM:WINDOWS  version.lib   Crypt32.lib  ;
+    local result ;
+    result += <define>_DEBUG <define>_WINDOWS      ;
+    result += <linkflags>$(EXE_LINK_D)  ;
+    return $(result) ;
+}
+
+rule winexe_release ( properties * )
+{
+    EXE_LINK_R = /LIBPATH:"$(SUN)/libs"  /SUBSYSTEM:WINDOWS  version.lib  Crypt32.lib  ;
+    local result ;
+    result += <define>NDEBUG <define>_WINDOWS   ;
+    result += <linkflags>$(EXE_LINK_R)  ;
+    result += <optimization>speed <debug-symbols>on ;
+    return $(result) ;
+}
+
+rule install_exe ( name : target *   )
+{
+
+    EXE_D  =   $(PRJ)/bin/debug/   ;
+    EXE_R  =   $(PRJ)/bin/release/  ;
+    install $(name) : $(target) :  
+         <install-dependencies>on <install-type>EXE <install-type>LIB  <install-type>PDB
+         <variant>debug:<location>$(EXE_D) 
+         <variant>release:<location>$(EXE_R)  ;
+}
+
+
+rule pylon_exe ( name : sources * : requirements * )
+{
+    exe $(name)
+        : $(sources) 
+        : $(requirements) <conditional>@winexe_debug  <variant>debug 
+        ;
+
+
+    exe $(name)
+        : $(sources) 
+        : $(requirements) <conditional>@winexe_release  <variant>release 
+        ;
+
+    install_exe $(name)_dist : $(name) ;  
+}
+
+

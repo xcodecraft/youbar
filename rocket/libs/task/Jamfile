@@ -1,0 +1,15 @@
+import os ;
+
+local root = $(SPACE)/rocket/libs/task ;
+
+pylon_lib pylon_task
+	: task.cpp  task_queue.cpp thread_task.cpp
+	: $(SUN)//boost_log
+	;
+
+
+
+pylon_ut task_ut 
+	:  test_task.cpp  pylon_task  $(SUN)//boost_thread  $(SUN)//boost_log   
+    ;
+

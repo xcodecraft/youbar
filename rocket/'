@@ -1,0 +1,158 @@
+#!import "./module.yaml"
+
+reusable:
+    - !R.vars  &runenv_online
+            USER            : "online"
+            DEV_ID          : 0
+            PRJ_ROOT        : "/home/q/system/hydra/"
+            DEBUG           : 0
+            REDUCER_EXTRAS  : "-l 1"
+            LOG_LEVEL       : 1 
+            SYSLOG_TPL      : "tpl_syslog-ng.conf"
+            SDK_PATH        : "/home/q/php/hydra_sdk" 
+        
+
+
+__env:
+    dev: !R.env
+        res:
+            - !R.vars 
+                ENV:            "dev"
+                PRJ_ROOT:       "${HOME}/devspace/hydra/"
+                PHP_ERROR:      ""
+                SDK_CONF:       "dev"
+                DEBUG   :       0
+                REDUCER_EXTRAS  : "-l 1"
+                LOG_LEVEL       : 1 
+                SYSLOG_TPL      : "tpl_dev_syslog-ng.conf"
+                GM_SERVERS       : "127.0.0.1:4730"
+                SDK_PATH         : "${HOME}/devspace/hydra/sdk"
+
+    work: !R.env
+        res:
+            - !R.using 
+                refs:
+                    - *runenv_online
+            - !R.vars 
+                ENV:            "work"
+                SDK_CONF:       "work"
+                PHP_ERROR:      ""
+                GM_SERVERS       : "172.28.0.24:4730"
+
+    ccp: !R.env
+        res:
+            - !R.using 
+                refs:
+                    - *runenv_online
+            - !R.vars 
+                ENV:            "online"
+                PHP_ERROR:      ""
+                GM_SERVERS       : "58.68.148.120:4730,58.68.148.121:4730"
+    zwt: !R.env
+        res:
+            - !R.using 
+                refs:
+                    - *runenv_online
+            - !R.vars 
+                ENV:            "online"
+                PHP_ERROR:      ""
+                GM_SERVERS       : "220.181.158.194:4730,220.181.158.195:4730"
+        
+    debug: !R.env
+        res:
+            - !R.vars
+                DEBUG  :  1
+                REDUCER_EXTRAS  : "-l 0"
+                LOG_LEVEL       : 0 
+
+
+__prj: !R.prj
+       res: 
+        - !R.vars 
+                PRJ_NAME:       "hydra"
+                PRJ_KEY :       "hydra"
+                PYLON   :       "/home/q/php/pylon-1.8"
+                MODULES:        "/home/q/php/pylon-1.8:/home/q/php/svc_utls"
+                BDB_FILE  :     "/data/hydra/${USER}_dispatch.bdb"
+        - !R.path 
+            dst :  "${PRJ_ROOT}/conf/used/"
+        - !R.path 
+            keep:  True
+            dst :  "/data/hydra"
+        - !R.file_tpl
+            tpl:  "${PRJ_ROOT}/conf/options/tpl_conf.yaml"
+            dst:  "${PRJ_ROOT}/conf/used/conf.yaml"
+        
+
+__sys:
+    gearmand: !R.system
+            res: 
+                - !R.vars
+                    APP_SYS     : "gearmand"  
+                - !R.gearmand
+                    ip: "127.0.0.1"
+                    port: "4730"
+                    sudo: True
+
+    monitor: !R.system
+            res: 
+                - !R.vars
+                    APP_SYS     : "monitor"  
+                    RUN_PATH    : "${PRJ_ROOT}/run/monitor"
+                - !R.file_tpl
+                    tpl:  "${PRJ_ROOT}/conf/options/tpl_mon.cron"
+                    dst:  "${PRJ_ROOT}/conf/used/monitor.cron"
+                - !R.crontab
+                    cron: "${PRJ_ROOT}/conf/used/monitor.cron"
+
+    center:  !R.system
+            res: 
+                - !R.vars
+                    APP_SYS     : "center"  
+                    PRJ_INCLUDE : "${PRJ_ROOT}/conf:${PRJ_ROOT}/src/apps/console/:${PRJ_ROOT}/src/"
+                    PHP_INI     : "${PRJ_ROOT}/conf/used/php.ini"
+                    RUN_PATH    : "${PRJ_ROOT}/run/center"
+                - !R.file_tpl
+                    tpl:  "${PRJ_ROOT}/conf/options/tpl_php.ini"
+                    dst:  "${PHP_INI}"
+
+                - !R.file_tpl
+                    tpl:  "${PRJ_ROOT}/conf/options/${SYSLOG_TPL}"
+                    dst:  "${PRJ_ROOT}/conf/used/syslog.conf"
+                - !R.file_tpl
+                    tpl:  "${PRJ_ROOT}/conf/options/tpl_dispatch_conf.php"
+                    dst:  "${PRJ_ROOT}/conf/used/dispatch_conf.php"
+                - !R.file_tpl
+                    tpl:  "${PRJ_ROOT}/conf/options/tpl_conf.py"
+                    dst:  "${PRJ_ROOT}/conf/used/conf.py"
+                - !R.syslog
+                    conf: "/etc/syslog-ng/syslog-ng.conf"
+                    append: "${PRJ_ROOT}/conf/used/syslog.conf"
+                    sudo: True 
+                - !R.autoload
+                    src: "${PYLON}:${PRJ_ROOT}/src:/home/q/php/svc_utls"
+                - !R.shell
+                    script: "${PRJ_ROOT}/bin/reducer_ctrl.sh"
+                - !R.daemon_php
+                    script: "${PRJ_ROOT}/bin/hydra_dispatch.php"
+
+#                 - !R.file_tpl
+#                     tpl:  "${PRJ_ROOT}/conf/options/tpl_fix.cron"
+#                     dst:  "${PRJ_ROOT}/conf/used/fix.cron"
+#                 - !R.crontab
+#                     cron:  "${PRJ_ROOT}/conf/used/fix.cron"
+                - !R.file_tpl
+                    tpl:  "${PRJ_ROOT}/conf/options/tpl_feedback.cron"
+                    dst:  "${PRJ_ROOT}/conf/used/feedback.cron"
+                - !R.crontab
+                    cron:  "${PRJ_ROOT}/conf/used/feedback.cron"
+                    
+    
+    test:  !R.system
+            res: 
+                - !R.vars
+                    APP_SYS: "test"  
+                    PRJ_INCLUDE: "${PRJ_ROOT}/conf:${PRJ_ROOT}/src/apps/console/:${PRJ_ROOT}/src/"
+                    MODULES:     "${PRJ_ROOT}/test:${MODULES}:/usr/local/php/lib/php"
+                - !R.using 
+                    ref : *pylon_php

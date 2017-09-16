@@ -1,0 +1,249 @@
+rocket=$HOME/devspace/rocket CD=. filter=" Jamfile *.jam *.h *.cpp *.xml *.py *.logconf *.conf *.php *.sh *.yaml *.js *.vim *.txt *.ini *.rc" in="_prj/in.vim" { Jamfile
+ Jamfile
+ build.sh
+ boost-build.jam
+ project-root.jam
+ version.txt
+  _prj=_prj filter="*" {
+  doc.doxygen
+  doc.sh
+  in.vim
+  init.sh
+  srcindex.sh
+  }
+  _rg=_rg {
+  conf.yaml
+  module.yaml
+  pub.yaml
+  pylon.yaml
+  }
+  bin=bin {
+  env.sh
+  }
+  conf=conf {
+   options=options {
+   doc_ngx_tpl.conf
+   }
+  }
+  data=data {
+   pic=pic {
+   }
+   wan=wan {
+   }
+  }
+  include=include {
+  as_timer.h
+  lib_def.h
+  lib_utls.h
+  lru.h
+  pimpl.h
+  port.h
+  shm.h
+  utls.h
+
+  log=log {
+   log.h
+   log_boost.h
+   log_sysl.h
+   syslog.h
+  }
+   error=error {
+   err_def.h
+   err_handler.h
+   error.h
+   exception_handler.h
+   }
+   net=net {
+   remote.h
+   }
+   task=task {
+   task.h
+   thread_task.h
+   }
+   text=text {
+   conf.h
+   conf_cmd.h
+   conf_core.h
+   json.h
+   json_core.h
+   rigger.h
+   text.h
+   }
+   utls=utls {
+   enum.h
+   }
+   win=win {
+   StackWalker.h
+   app_utls.h
+   filepropty.h
+   md5.h
+   registry.h
+   str_conv.h
+   utls.h
+   win_chk.h
+   }
+   http=http {
+    http.h
+   }
+  }
+  libs=libs {
+  HookApi.cpp
+  StackWalker.cpp
+  baselib_def.cpp
+  cookie_path_opt.cpp
+  dllmain.cpp
+  encrypt.cpp
+  encrypt_str.cpp
+  lru.cpp
+  md5.cpp
+  method.cpp
+  parser.cpp
+  pyintf.cpp
+  pystub.cpp
+  spirit_test.cpp
+  stdafx.cpp
+  stub.cpp
+  zip.cpp
+  log=log {
+   Jamfile
+   log_boost.cpp
+   log_sysl.cpp
+   test_log.cpp
+  }
+   error=error {
+   Jamfile
+   dllmain.cpp
+   err_handler.cpp
+   error.cpp
+   exception_handler.cpp
+   test_error.cpp
+   test_error1.cpp
+   test_main.cpp
+   }
+   net=net {
+   Jamfile
+   dllmain.cpp
+   remote.cpp
+   test_net.cpp
+   }
+   single_ins=single_ins {
+   dllmain.cpp
+   log_ins.cpp
+   }
+   task=task {
+   Jamfile
+   task_queue.h
+   dllmain.cpp
+   task.cpp
+   task_queue.cpp
+   test_task.cpp
+   thread_task.cpp
+   }
+   text=text {
+   Jamfile
+   conf_grammar.h
+   conf_grammar.cpp
+   conf_impl.h
+   utf8.h
+   base64.cpp
+   rigger_impl.h
+   rigger_base.cpp
+   rigger_conf.cpp
+   rigger_run.cpp
+   conf_obj.cpp
+   conf.cpp
+   zconf.cpp
+   conf_cmd.cpp
+   conf_impl.cpp
+   conf_parser.cpp
+   rigger_parser.cpp
+   json.cpp
+   main.cpp
+   node.cpp
+   rigger_py.cpp
+   pyintf.cpp
+   text.cpp
+    bin=bin {
+     gcc-4.1.2=gcc-4.1.2 {
+      debug=debug {
+       link-static=link-static {
+       }
+      }
+     }
+    }
+    test=test {
+    Jamfile
+    test_rg_base.cpp
+    test_rg_py.cpp
+    test_conf.cpp
+    test_grammar.cpp
+    test_json.cpp
+    test_parser.cpp
+    test_spirit.cpp
+    res.py
+    test.py
+    x.conf
+    x1.conf
+    y.conf
+    }
+    utf8=utf8 {
+    checked.h
+    core.h
+    unchecked.h
+    }
+   }
+   utls=utls {
+   }
+   win=win {
+   app_utls.cpp
+   filepropty.cpp
+   md5.cpp
+   registry.cpp
+   str_conv.cpp
+   utls.cpp
+   }
+   http=http {
+   Jamfile
+   grammar.h
+   impl_base.h
+   mem_ctrl.h
+   grammar.cpp
+   howtouse.cpp
+   http.cpp
+   http_perf.cpp
+   mem_ctrl.cpp
+   parser.cpp
+   perf_requ.cpp
+   test_byfile.cpp
+   test_gram.cpp
+   test_http.cpp
+   utls.cpp
+   }
+  }
+  script=script {
+  }
+  test=test {
+  main_test.py
+  parser_test.py
+  reducer_test.py
+  utls_test.py
+  assemply.php
+  data_test.php
+  depend_test.php
+  dispatch_test.php
+  feedback_test.php
+  reciver_test.php
+  sdk_test.php
+  test.sh
+  test_reducer.sh
+   data=data {
+   event_bad.yaml
+   event_ok.yaml
+   }
+  }
+  dist=dist {
+  Jamfile
+  boost-build.jam
+  project-root.jam
+  }
+}

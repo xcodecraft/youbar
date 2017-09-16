@@ -1,0 +1,30 @@
+import os ;
+
+
+alias boost_system : $(SUN)//boost_system ;
+alias boost_log    : $(SUN)//boost_log ;
+alias boost_chrono    : $(SUN)//boost_chrono ;
+local bin  = $(SPACE)/village/bin ;
+local root = $(SPACE)/village/doctor ;
+
+
+
+
+src =            
+     doctor.cpp
+     stdafx.cpp
+     doctor.rc 
+
+    ;
+
+
+
+
+
+
+pylon_exe doctor 
+   : $(root)/$(src)
+   : <include>$(root)
+   ;
+
+#stage  dist :  pylon_error error_ut : <location>$(bin)  : ;

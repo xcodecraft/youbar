@@ -1,0 +1,17 @@
+prj: !G.conf
+    version : "./version.txt"
+    service : "./_rg/pylon.yaml"
+    publish : "./_rg/pub.yaml"
+    pub_ver : 2
+    scm              : "git"
+
+os:
+    diy: !G.os_env
+        nginx_conf_path  : "/usr/local/nginx/conf/include"
+        nginx_ctrl       : "/usr/local/nginx/sbin/nginx -s "
+        apache_ctrl      : "/usr/local/apache2/bin/apachectl"
+        apache_conf_path : "/usr/local/apache2/conf/include"
+        spawn_fcgi       : "/usr/local/bin/spawn-fcgi"
+        php              : "/usr/local/php-5.3/bin/php"
+        python           : "/usr/bin/python2.7"
+

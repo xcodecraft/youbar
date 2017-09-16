@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "village", "village.vcxproj", "{E5CDC27C-A772-4BA6-A7DF-D85C59702861}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vcprj", "..\rocket\vcprj.vcxproj", "{A686B3DD-9DA1-EF37-4281-8C157E3E2203}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E5CDC27C-A772-4BA6-A7DF-D85C59702861}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E5CDC27C-A772-4BA6-A7DF-D85C59702861}.Debug|Win32.Build.0 = Debug|Win32
+		{E5CDC27C-A772-4BA6-A7DF-D85C59702861}.Release|Win32.ActiveCfg = Release|Win32
+		{E5CDC27C-A772-4BA6-A7DF-D85C59702861}.Release|Win32.Build.0 = Release|Win32
+		{A686B3DD-9DA1-EF37-4281-8C157E3E2203}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A686B3DD-9DA1-EF37-4281-8C157E3E2203}.Debug|Win32.Build.0 = Debug|Win32
+		{A686B3DD-9DA1-EF37-4281-8C157E3E2203}.Release|Win32.ActiveCfg = Release|Win32
+		{A686B3DD-9DA1-EF37-4281-8C157E3E2203}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,229 @@
+rocket=$HOME/devspace/rocket CD=. filter=" Jamfile *.jam *.h *.cpp *.xml *.py *.logconf *.conf *.php *.sh *.yaml *.js *.vim *.txt *.ini *.rc" in="_prj/in.vim" { Jamfile
+  Jamfile
+  boost-build.jam
+  project-root.jam
+  version.txt
+  _prj=_prj {
+   init.sh
+   srcindex.sh
+   in.vim
+  }
+  _rg=_rg {
+   conf.yaml
+   module.yaml
+   pub.yaml
+   pylon.yaml
+  }
+  bin=bin {
+  }
+  build=build {
+   libs=libs {
+    error=error {
+     gcc-4.1.2=gcc-4.1.2 {
+      debug=debug {
+       threading-multi=threading-multi {
+       }
+      }
+     }
+    }
+    text=text {
+     gcc-4.1.2=gcc-4.1.2 {
+      debug=debug {
+       threading-multi=threading-multi {
+       }
+      }
+     }
+    }
+   }
+  }
+  conf=conf {
+   hydra.xml
+   event.yaml
+   options=options {
+    tpl_hydra.xml
+    tpl_conf.py
+    tpl_log.logconf
+    tpl_logevent.logconf
+    tpl_proc.logconf
+    to_other.conf
+    to_sandbox.conf
+    tpl_ngx.conf
+    tpl_syslog-ng.conf
+    tpl_dispatch_conf.php
+    tpl_test_config.php
+    tpl_conf.yaml
+    tpl_php.ini
+    tpl_test_php.ini
+   }
+  }
+  data=data {
+   pic=pic {
+    setup.sh
+    event.yaml
+   }
+   wan=wan {
+    setup.sh
+    _event.yaml
+    event.yaml
+   }
+  }
+  include=include {
+   as_timer.h
+   lib_def.h
+   lib_utls.h
+   lru.h
+   pimpl.h
+   port.h
+   shm.h
+   utls.h
+   error=error {
+    err_def.h
+    err_handler.h
+    error.h
+    exception_handler.h
+    log_unix.h
+    log_win.h
+   }
+   net=net {
+    remote.h
+   }
+   task=task {
+    task.h
+    task_queue.h
+    thread_task.h
+   }
+   text=text {
+    fuck.h
+    xjson.h
+   }
+   utls=utls {
+    enum.h
+   }
+   win=win {
+    StackWalker.h
+    app_utls.h
+    filepropty.h
+    md5.h
+    registry.h
+    str_conv.h
+    utls.h
+    win_chk.h
+   }
+  }
+  libs=libs {
+   HookApi.cpp
+   StackWalker.cpp
+   baselib_def.cpp
+   cookie_path_opt.cpp
+   dllmain.cpp
+   encrypt.cpp
+   encrypt_str.cpp
+   lru.cpp
+   md5.cpp
+   method.cpp
+   parser.cpp
+   pyintf.cpp
+   pystub.cpp
+   remote.cpp
+   spirit_test.cpp
+   stdafx.cpp
+   stub.cpp
+   zip.cpp
+   error=error {
+    Jamfile
+    dllmain.cpp
+    err_handler.cpp
+    error.cpp
+    exception_handler.cpp
+    log_unix.cpp
+    log_win.cpp
+    test_error.cpp
+    test_error1.cpp
+   }
+   net=net {
+   }
+   single_ins=single_ins {
+    dllmain.cpp
+    log_ins.cpp
+   }
+   task=task {
+    task.cpp
+    task_queue.cpp
+    thread_task.cpp
+   }
+   text=text {
+    Jamfile
+    utf8.h
+    base64.cpp
+    fuck.cpp
+    main.cpp
+    node.cpp
+    xjson.cpp
+    bin=bin {
+     gcc-4.1.2=gcc-4.1.2 {
+      debug=debug {
+       link-static=link-static {
+       }
+      }
+     }
+    }
+    test=test {
+     Jamfile
+     test_json.cpp
+     test_spirit.cpp
+    }
+    utf8=utf8 {
+     checked.h
+     core.h
+     unchecked.h
+    }
+   }
+   utls=utls {
+   }
+   win=win {
+    app_utls.cpp
+    filepropty.cpp
+    md5.cpp
+    registry.cpp
+    str_conv.cpp
+    utls.cpp
+   }
+  }
+  script=script {
+   base.py
+   cron_reducer.py
+   event_proc.py
+   file_reducer.py
+   fix_event.py
+   hydra_mon.py
+   init.py
+   reducer.py
+   reducer_stub.py
+   data_svc.php
+   dispatch.php
+   feedback.php
+   fix_feedback_event.php
+   gm_agent.php
+   hydra_svc.php
+   utls.php
+  }
+  test=test {
+   main_test.py
+   parser_test.py
+   reducer_test.py
+   utls_test.py
+   assemply.php
+   data_test.php
+   depend_test.php
+   dispatch_test.php
+   feedback_test.php
+   reciver_test.php
+   sdk_test.php
+   test.sh
+   test_reducer.sh
+   data=data {
+    event_bad.yaml
+    event_ok.yaml
+   }
+  }
+}

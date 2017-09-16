@@ -1,0 +1,28 @@
+import os ;
+import python ;
+
+local root = $(SPACE)/rocket/libs/http ;
+
+pylon_lib pylon_http
+	:  parser.cpp   http.cpp  grammar.cpp utls.cpp mem_ctrl.cpp
+	: $(SUN)//boost_log
+	;
+
+
+boostlibs =  $(SUN)//boost_system   $(SUN)//boost_log  $(SUN)//boost_filesystem  $(SUN)//boost_thread  ;
+
+pylon_ut2  pref_resp
+    : pylon_http http_perf.cpp  ../error//pylon_error  ../log//pylon_syslog   $(boostlibs) 
+    :
+    ;
+
+pylon_ut2  pref_requ
+    : pylon_http perf_requ.cpp  ../error//pylon_error  ../log//pylon_syslog   $(boostlibs) 
+    :
+    ;
+
+pylon_ut2 http_ut 
+	:  pylon_http     test_gram.cpp test_http.cpp   test_byfile.cpp ../error//pylon_error  ../log//pylon_syslog   $(boostlibs) 
+	:
+	;
+

@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\as_timer.h" />
+    <ClInclude Include="include\enum.h" />
+    <ClInclude Include="include\error\error.h" />
+    <ClInclude Include="include\error\err_def.h" />
+    <ClInclude Include="include\error\err_handler.h" />
+    <ClInclude Include="include\error\exception_handler.h" />
+    <ClInclude Include="include\error\log.h" />
+    <ClInclude Include="include\error\log_boost.h" />
+    <ClInclude Include="include\error\log_sysl.h" />
+    <ClInclude Include="include\lib_def.h" />
+    <ClInclude Include="include\lib_utls.h" />
+    <ClInclude Include="include\log\log.h" />
+    <ClInclude Include="include\log\log_boost.h" />
+    <ClInclude Include="include\log\log_sysl.h" />
+    <ClInclude Include="include\log\syslog.h" />
+    <ClInclude Include="include\lru.h" />
+    <ClInclude Include="include\net\remote.h" />
+    <ClInclude Include="include\pimpl.h" />
+    <ClInclude Include="include\port.h" />
+    <ClInclude Include="include\shm.h" />
+    <ClInclude Include="include\task\task.h" />
+    <ClInclude Include="include\task\thread_task.h" />
+    <ClInclude Include="include\text\conf.h" />
+    <ClInclude Include="include\text\conf_cmd.h" />
+    <ClInclude Include="include\text\conf_core.h" />
+    <ClInclude Include="include\text\json.h" />
+    <ClInclude Include="include\text\json_core.h" />
+    <ClInclude Include="include\text\text.h" />
+    <ClInclude Include="include\text\xjson.h" />
+    <ClInclude Include="include\text\rigger.h" />
+    <ClInclude Include="include\utls.h" />
+    <ClInclude Include="libs\text\conf_grammar.h" />
+    <ClInclude Include="libs\text\conf_impl.h" />
+    <ClInclude Include="libs\text\utf8.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="libs\baselib_def.cpp" />
+    <ClCompile Include="libs\cookie_path_opt.cpp" />
+    <ClCompile Include="libs\dllmain.cpp" />
+    <ClCompile Include="libs\encrypt.cpp" />
+    <ClCompile Include="libs\encrypt_str.cpp" />
+    <ClCompile Include="libs\error\error.cpp" />
+    <ClCompile Include="libs\error\err_handler.cpp" />
+    <ClCompile Include="libs\error\exception_handler.cpp" />
+    <ClCompile Include="libs\error\log_boost.cpp" />
+    <ClCompile Include="libs\error\log_sysl.cpp" />
+    <ClCompile Include="libs\error\test_error.cpp" />
+    <ClCompile Include="libs\HookApi.cpp" />
+    <ClCompile Include="libs\lru.cpp" />
+    <ClCompile Include="libs\md5.cpp" />
+    <ClCompile Include="libs\method.cpp" />
+    <ClCompile Include="libs\net\dllmain.cpp" />
+    <ClCompile Include="libs\net\remote.cpp" />
+    <ClCompile Include="libs\net\test_net.cpp" />
+    <ClCompile Include="libs\parser.cpp" />
+    <ClCompile Include="libs\pyintf.cpp" />
+    <ClCompile Include="libs\pystub.cpp" />
+    <ClCompile Include="libs\remote.cpp" />
+    <ClCompile Include="libs\spirit_test.cpp" />
+    <ClCompile Include="libs\StackWalker.cpp" />
+    <ClCompile Include="libs\stdafx.cpp" />
+    <ClCompile Include="libs\stub.cpp" />
+    <ClCompile Include="libs\task\task.cpp" />
+    <ClCompile Include="libs\task\task_queue.cpp" />
+    <ClCompile Include="libs\task\test_task.cpp" />
+    <ClCompile Include="libs\task\thread_task.cpp" />
+    <ClCompile Include="libs\text\base64.cpp" />
+    <ClCompile Include="libs\text\conf.cpp" />
+    <ClCompile Include="libs\text\conf_cmd.cpp" />
+    <ClCompile Include="libs\text\conf_impl.cpp" />
+    <ClCompile Include="libs\text\conf_parser.cpp" />
+    <ClCompile Include="libs\text\fuck.cpp" />
+    <ClCompile Include="libs\text\json.cpp" />
+    <ClCompile Include="libs\text\main.cpp" />
+    <ClCompile Include="libs\text\node.cpp" />
+    <ClCompile Include="libs\text\test\test_conf.cpp" />
+    <ClCompile Include="libs\text\test\test_json.cpp" />
+    <ClCompile Include="libs\text\test\test_parser.cpp" />
+    <ClCompile Include="libs\text\test\test_spirit.cpp" />
+    <ClCompile Include="libs\text\text.cpp" />
+    <ClCompile Include="libs\text\unit.cpp" />
+    <ClCompile Include="libs\text\xjson.cpp" />
+    <ClCompile Include="libs\zip.cpp" />
+  </ItemGroup>
+  <ItemGroup Label="Jamfile">
+    <None Include="libs\error\Jamfile" />
+    <None Include="libs\net\Jamfile" />
+    <None Include="libs\task\Jamfile" />
+    <None Include="libs\text\Jamfile" />
+    <None Include="libs\text\test\Jamfile" />
+    <None Include="libs\text\test\x.conf" />
+    <None Include="libs\text\test\y.conf" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and '$(VisualStudioVersion)' == ''">$(VCTargetsPath11)</VCTargetsPath>
+  </PropertyGroup>
+  <PropertyGroup Label="Globals">
+    <Keyword>ManagedCProj</Keyword>
+    <ProjectGuid>{A686B3DD-9DA1-EF37-4281-8C157E3E2203}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <NMakeBuildCommandLine>$(SolutionDir)\build.bat debug</NMakeBuildCommandLine>
+    <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeCleanCommandLine>$(SolutionDir)\build.bat clean</NMakeCleanCommandLine>
+    <IncludePath>D:\workspace\youbar\sun\include;D:\workspace\youbar\rocket\include;H:\youbar\rocket\include;H:\youbar\sun\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <NMakeBuildCommandLine>..\build.bat</NMakeBuildCommandLine>
+    <NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <IncludePath>D:\workspace\youbar\sun\include;D:\workspace\youbar\rocket\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <BuildLog>
+      <Path>build.log</Path>
+    </BuildLog>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <BuildLog>
+      <Path>$(IntDir).log</Path>
+    </BuildLog>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,20 @@
+import modules ;
+import os ;
+path-constant  PRJ :  ./   ;
+path-constant  SPACE :  ../   ;
+path-constant  SUN :  ../sun   ;
+path-constant  ROCKET :  ../rocket ;
+path-constant  DIST  :  $(SPACE)/village/bin ;
+
+
+
+	
+project 
+        : requirements <include>include&&$(SPACE)/sun/include&&$(SPACE)/rocket/include&&$(SPACE)/sun/include/wtl    
+		: requirements <link>static <threading>multi <runtime-link>shared 
+        : build-dir  $(SPACE)/village/build
+        ;
+        
+
+build-project   libs/wan ;
+#build-project   doctor ;
